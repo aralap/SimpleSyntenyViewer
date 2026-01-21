@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Generated data files (uncomment if you don't want to track generated JSON)
+# synteny_data.json
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Logs
+*.log
+*.out
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Large data files (FASTA, PAF, etc.)
+*.fasta
+*.fa
+*.fna
+*.paf
+*.bam
+*.bai
+*.sam
+*.gff
+*.gff3
+*.gtf
+
+# Uploads and working directories
+uploads/
+comparisons/
+temp/
+tmp/
+
+# Node modules (if you add any JS dependencies)
+node_modules/
+package-lock.json
+
+# Environment variables
+.env
+.env.local
