@@ -34,22 +34,43 @@ A web-based synteny visualization tool using D3.js to visualize synteny blocks b
 ### Prerequisites
 
 - Python 3.7+
-- [minimap2](https://github.com/lh3/minimap2) installed and in PATH
-- [samtools](https://github.com/samtools/samtools) installed and in PATH
+- [minimap2](https://github.com/lh3/minimap2) installed and in PATH (required)
+- [samtools](https://github.com/samtools/samtools) installed and in PATH (optional, but recommended for faster FASTA indexing)
 
 ### Installation
 
-1. **Install Python dependencies:**
+1. **Create virtual environment and install Python dependencies:**
 
    ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
    pip install -r requirements.txt
    ```
 
-2. **Verify minimap2 and samtools are installed:**
+2. **Install minimap2 (required) and optionally samtools:**
+
+   **Option A: Automatic installation (recommended if you have conda/mamba):**
+   
+   ```bash
+   python3 install.py  # Installs minimap2 and samtools
+   python3 install.py --no-optional  # Installs only minimap2 (samtools optional)
+   ```
+   
+   This will create a conda environment with the required tools. Follow the instructions to activate it or add it to your PATH.
+   
+   **Option B: Manual installation:**
+   
+   - **macOS (Homebrew):** `brew install minimap2` (add `samtools` if desired)
+   - **Linux (apt):** `sudo apt-get install minimap2` (add `samtools` if desired)
+   - **Conda:** `conda install -c bioconda minimap2` (add `samtools` if desired)
+   
+   **Note:** samtools is optional. If not installed, the app will parse FASTA files directly (slower for large files but works fine).
+   
+3. **Verify installation:**
 
    ```bash
+   python3 install.py --check-only
    minimap2 --version
-   samtools --version
    ```
 
 ## Usage
@@ -119,26 +140,34 @@ A web-based synteny visualization tool using D3.js to visualize synteny blocks b
 
 2. **Share the ngrok URL** shown in the terminal
 
-## Features
+## API Endpoints
 
-- Interactive synteny visualization showing links between assembly contigs and reference chromosomes
-- Color-coded links based on alignment identity:
-  - Green: ≥95% identity
-  - Blue: ≥90% identity
-  - Orange: ≥85% identity
-  - Red: <85% identity
-- Filterable by minimum identity threshold
-- Hover tooltips showing detailed alignment information
-- Linear genome view with sequences arranged horizontally
+The Flask server provides the following REST API endpoints:
 
-## Usage
+- `GET /` - Serve the main HTML page
+- `POST /api/upload` - Upload a FASTA file
+- `GET /api/files` - List all uploaded files
+- `POST /api/align` - Run minimap2 alignment between two files
+- `GET /api/comparisons` - List all available comparisons
+- `GET /api/comparison/<id>/data` - Get JSON data for a comparison
+- `DELETE /api/comparison/<id>/delete` - Delete a comparison
 
-1. Use the slider to adjust the minimum identity threshold
-2. Hover over synteny links to see detailed information
-3. The visualization shows:
-   - Blue rectangles: Assembly contigs (top)
-   - Red rectangles: Reference chromosomes (bottom)
-   - Colored curves: Synteny links between them
+## Usage Tips
+
+1. **Adjust identity threshold:** Use the slider to filter synteny links by minimum identity
+2. **Hover for details:** Hover over synteny ribbons to see alignment details
+3. **Download images:** Click "Download Image" to export the visualization as PNG
+4. **Multiple comparisons:** Upload multiple FASTA files to compare different assemblies
+5. **Large files:** Be patient when aligning large genomes - minimap2 may take several minutes
+
+## Visualization Details
+
+The visualization shows:
+- **Blue rectangles:** Query/Assembly sequences (top row)
+- **Red rectangles:** Target/Reference sequences (bottom row)
+- **Colored ribbons:** Synteny links connecting aligned regions
+- **Ribbon width:** Proportional to alignment block length
+- **Ribbon color:** Based on alignment identity percentage
 
 ## Customization
 
@@ -146,3 +175,12 @@ You can modify the visualization by editing `index.html`:
 - Adjust `width` and `height` variables to change plot size
 - Modify color schemes in the `getColorForIdentity()` function
 - Change filtering parameters in `convert_paf_to_json.py`
+- Adjust alignment parameters in `app.py` (minimap2 options)
+
+## Troubleshooting
+
+- **"minimap2 not found"**: Make sure minimap2 is installed and in your PATH (required)
+- **"samtools not found"**: This is optional. The app will work without it, but FASTA indexing will be slower for large files
+- **Upload fails**: Check file size limits and ensure files are valid FASTA format
+- **Alignment takes too long**: Large genomes (>100MB) may take 10+ minutes to align
+- **No visualization appears**: Check browser console for errors, ensure JSON data is valid

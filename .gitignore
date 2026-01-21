@@ -9,6 +9,8 @@ venv/
 ENV/
 .venv
 
+# Note: venv/ is ignored but you should create it locally
+
 # Generated data files (uncomment if you don't want to track generated JSON)
 # synteny_data.json
 

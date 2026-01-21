@@ -19,6 +19,36 @@ def parse_fai(fai_file):
                     lengths[parts[0]] = int(parts[1])
     return lengths
 
+def parse_fasta_lengths(fasta_file):
+    """Parse FASTA file directly to get sequence lengths (alternative to samtools faidx)."""
+    lengths = {}
+    current_seq = None
+    current_length = 0
+    
+    try:
+        with open(fasta_file, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                if line.startswith('>'):
+                    # Save previous sequence
+                    if current_seq is not None:
+                        lengths[current_seq] = current_length
+                    # Start new sequence
+                    current_seq = line[1:].split()[0]  # Get sequence name (first word after >)
+                    current_length = 0
+                else:
+                    # Add to current sequence length
+                    current_length += len(line)
+            # Don't forget the last sequence
+            if current_seq is not None:
+                lengths[current_seq] = current_length
+    except Exception as e:
+        print(f"Warning: Could not parse FASTA file {fasta_file}: {e}")
+    
+    return lengths
+
 def parse_paf(paf_file, min_length=1000, min_identity=0.8):
     """Parse PAF file and extract synteny blocks."""
     synteny_blocks = []
@@ -73,12 +103,31 @@ def parse_paf(paf_file, min_length=1000, min_identity=0.8):
     
     return synteny_blocks
 
-def create_genomed3plot_json(synteny_blocks, query_fai, target_fai, output_file):
-    """Create JSON data structure for GenomeD3Plot."""
+def create_genomed3plot_json(synteny_blocks, query_fai, target_fai, output_file, metadata=None):
+    """Create JSON data structure for GenomeD3Plot.
     
-    # Get sequence lengths
+    Args:
+        synteny_blocks: List of synteny block dictionaries
+        query_fai: Path to query FASTA index file or FASTA file
+        target_fai: Path to target FASTA index file or FASTA file
+        output_file: Path to output JSON file
+        metadata: Optional dictionary with 'query_file', 'target_file', and file labels
+    """
+    
+    # Get sequence lengths - try FAI first, fall back to parsing FASTA directly
     query_lengths = parse_fai(query_fai)
     target_lengths = parse_fai(target_fai)
+    
+    # If FAI files don't exist or are empty, try to get from FASTA directly
+    if not query_lengths and query_fai.endswith('.fai'):
+        fasta_file = query_fai[:-4]  # Remove .fai extension
+        if os.path.exists(fasta_file):
+            query_lengths = parse_fasta_lengths(fasta_file)
+    
+    if not target_lengths and target_fai.endswith('.fai'):
+        fasta_file = target_fai[:-4]  # Remove .fai extension
+        if os.path.exists(fasta_file):
+            target_lengths = parse_fasta_lengths(fasta_file)
     
     # Group synteny blocks by query and target
     query_tracks = defaultdict(list)
@@ -117,12 +166,47 @@ def create_genomed3plot_json(synteny_blocks, query_fai, target_fai, output_file)
             'identity': block['identity']
         })
     
+    # Get labels from metadata if available
+    query_label = 'Assembly'
+    target_label = 'Reference'
+    if metadata:
+        # Try to get labels from file metadata
+        query_file = metadata.get('query_file')
+        target_file = metadata.get('target_file')
+        
+        # Metadata file is always in the uploads folder
+        # Try to find uploads folder - check common locations
+        uploads_folders = ['uploads', os.path.join(os.path.dirname(output_file), '..', 'uploads')]
+        if query_fai:
+            query_dir = os.path.dirname(query_fai)
+            if 'uploads' in query_dir:
+                uploads_folders.insert(0, query_dir)
+        
+        metadata_file = None
+        for folder in uploads_folders:
+            candidate = os.path.join(folder, '.file_metadata.json')
+            if os.path.exists(candidate):
+                metadata_file = candidate
+                break
+        
+        if metadata_file and os.path.exists(metadata_file):
+            try:
+                import json
+                with open(metadata_file, 'r') as f:
+                    file_metadata = json.load(f)
+                    if query_file and query_file in file_metadata:
+                        query_label = file_metadata[query_file].get('label', query_file)
+                    if target_file and target_file in file_metadata:
+                        target_label = file_metadata[target_file].get('label', target_file)
+            except:
+                pass
+    
     # Create genome data structure
     genomes = {}
     
     # Query genome
     query_genome = {
-        'name': 'Assembly',
+        'name': query_label,
         'sequences': []
     }
     for seq_name, length in sorted(query_lengths.items(), key=lambda x: -x[1]):
@@ -139,7 +223,7 @@ def create_genomed3plot_json(synteny_blocks, query_fai, target_fai, output_file)
     
     # Target genome (reference)
     target_genome = {
-        'name': 'Reference (C_glabrata_CBS138)',
+        'name': target_label,
         'sequences': []
     }
     for seq_name, length in sorted(target_lengths.items(), key=lambda x: -x[1]):
