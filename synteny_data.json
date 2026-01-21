@@ -1,0 +1,1209 @@
+{
+  "genomes": {
+    "query": {
+      "name": "Assembly",
+      "sequences": [
+        {
+          "name": "contig_34",
+          "length": 1474604,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 61815,
+                  "end": 1455981,
+                  "strand": "-",
+                  "identity": 0.9987678369585798
+                },
+                {
+                  "start": 1450702,
+                  "end": 1473170,
+                  "strand": "+",
+                  "identity": 0.8859022144266608
+                },
+                {
+                  "start": 51138,
+                  "end": 67376,
+                  "strand": "-",
+                  "identity": 0.9396047528165979
+                },
+                {
+                  "start": 18151,
+                  "end": 29220,
+                  "strand": "-",
+                  "identity": 0.9986452312138728
+                },
+                {
+                  "start": 7149,
+                  "end": 18238,
+                  "strand": "-",
+                  "identity": 0.993869455463397
+                },
+                {
+                  "start": 42754,
+                  "end": 51212,
+                  "strand": "-",
+                  "identity": 0.9988176873965476
+                },
+                {
+                  "start": 31753,
+                  "end": 40211,
+                  "strand": "-",
+                  "identity": 0.9988176873965476
+                },
+                {
+                  "start": 2,
+                  "end": 7233,
+                  "strand": "-",
+                  "identity": 0.9984789823008849
+                },
+                {
+                  "start": 29365,
+                  "end": 30898,
+                  "strand": "-",
+                  "identity": 0.9928245270711024
+                },
+                {
+                  "start": 40366,
+                  "end": 41899,
+                  "strand": "-",
+                  "identity": 0.9928245270711024
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_54",
+          "length": 1438665,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 3457,
+                  "end": 1437383,
+                  "strand": "+",
+                  "identity": 0.9954178788495814
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_3",
+          "length": 1307155,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 2700,
+                  "end": 1305850,
+                  "strand": "-",
+                  "identity": 0.998817122723901
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_32",
+          "length": 1243942,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 1543,
+                  "end": 1230728,
+                  "strand": "-",
+                  "identity": 0.9559630505127082
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_44",
+          "length": 1052963,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 42,
+                  "end": 1052958,
+                  "strand": "+",
+                  "identity": 0.9920255243991606
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_23",
+          "length": 1016671,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 1809,
+                  "end": 1015116,
+                  "strand": "-",
+                  "identity": 0.9859196566087155
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_28",
+          "length": 1009457,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 17227,
+                  "end": 1006447,
+                  "strand": "+",
+                  "identity": 0.9984979536387225
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_52",
+          "length": 948874,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 10644,
+                  "end": 935189,
+                  "strand": "+",
+                  "identity": 0.9990256784025019
+                },
+                {
+                  "start": 937185,
+                  "end": 941168,
+                  "strand": "-",
+                  "identity": 0.8240461847389559
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_7",
+          "length": 702484,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 3383,
+                  "end": 700232,
+                  "strand": "+",
+                  "identity": 0.982205966547045
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_31",
+          "length": 662198,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 7290,
+                  "end": 655514,
+                  "strand": "+",
+                  "identity": 0.9964877696643252
+                },
+                {
+                  "start": 656021,
+                  "end": 660363,
+                  "strand": "-",
+                  "identity": 0.8755029056772463
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_12",
+          "length": 594676,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 1641,
+                  "end": 593924,
+                  "strand": "-",
+                  "identity": 0.9150986178495807
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_49",
+          "length": 512644,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 3194,
+                  "end": 508541,
+                  "strand": "+",
+                  "identity": 0.9923432139507828
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_8",
+          "length": 512595,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 260,
+                  "end": 505702,
+                  "strand": "+",
+                  "identity": 0.9710726388946591
+                },
+                {
+                  "start": 504008,
+                  "end": 507539,
+                  "strand": "+",
+                  "identity": 0.9045596148399887
+                },
+                {
+                  "start": 507837,
+                  "end": 510185,
+                  "strand": "+",
+                  "identity": 0.9433560477001703
+                },
+                {
+                  "start": 508428,
+                  "end": 510776,
+                  "strand": "+",
+                  "identity": 0.9433560477001703
+                },
+                {
+                  "start": 510650,
+                  "end": 512595,
+                  "strand": "+",
+                  "identity": 0.9552699228791773
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_53",
+          "length": 111847,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 8231,
+                  "end": 111841,
+                  "strand": "-",
+                  "identity": 0.9244518221124151
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_50",
+          "length": 20063,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 12,
+                  "end": 20060,
+                  "strand": "+",
+                  "identity": 0.9999501222006085
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_27",
+          "length": 15881,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 14428,
+                  "end": 15578,
+                  "strand": "-",
+                  "identity": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_51",
+          "length": 12983,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": []
+            }
+          ]
+        },
+        {
+          "name": "contig_55",
+          "length": 11809,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 5,
+                  "end": 11801,
+                  "strand": "-",
+                  "identity": 1.0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_24",
+          "length": 10958,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": []
+            }
+          ]
+        },
+        {
+          "name": "contig_29",
+          "length": 6098,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 957,
+                  "end": 6061,
+                  "strand": "+",
+                  "identity": 0.9716796875
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "contig_47",
+          "length": 5319,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": []
+            }
+          ]
+        },
+        {
+          "name": "contig_6",
+          "length": 1604,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": []
+            }
+          ]
+        },
+        {
+          "name": "contig_1",
+          "length": 1587,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 28,
+                  "end": 1583,
+                  "strand": "+",
+                  "identity": 1.0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "target": {
+      "name": "Reference (C_glabrata_CBS138)",
+      "sequences": [
+        {
+          "name": "ChrL_C_glabrata_CBS138",
+          "length": 1528264,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 1439496,
+                  "end": 1455681,
+                  "strand": "-",
+                  "identity": 0.9396047528165979
+                },
+                {
+                  "start": 1444609,
+                  "end": 1455681,
+                  "strand": "-",
+                  "identity": 0.9986452312138728
+                },
+                {
+                  "start": 1444606,
+                  "end": 1455681,
+                  "strand": "-",
+                  "identity": 0.993869455463397
+                },
+                {
+                  "start": 1444619,
+                  "end": 1453077,
+                  "strand": "-",
+                  "identity": 0.9988176873965476
+                },
+                {
+                  "start": 1444619,
+                  "end": 1453077,
+                  "strand": "-",
+                  "identity": 0.9988176873965476
+                },
+                {
+                  "start": 1444609,
+                  "end": 1451841,
+                  "strand": "-",
+                  "identity": 0.9984789823008849
+                },
+                {
+                  "start": 1453936,
+                  "end": 1455469,
+                  "strand": "-",
+                  "identity": 0.9928245270711024
+                },
+                {
+                  "start": 1453936,
+                  "end": 1455469,
+                  "strand": "-",
+                  "identity": 0.9928245270711024
+                },
+                {
+                  "start": 1930,
+                  "end": 1429841,
+                  "strand": "+",
+                  "identity": 0.9954178788495814
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ChrM_C_glabrata_CBS138",
+          "length": 1465272,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 8608,
+                  "end": 1402890,
+                  "strand": "-",
+                  "identity": 0.9987678369585798
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ChrK_C_glabrata_CBS138",
+          "length": 1307090,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 3,
+                  "end": 1302822,
+                  "strand": "-",
+                  "identity": 0.998817122723901
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ChrJ_C_glabrata_CBS138",
+          "length": 1247563,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 2776,
+                  "end": 1195050,
+                  "strand": "-",
+                  "identity": 0.9559630505127082
+                },
+                {
+                  "start": 1173437,
+                  "end": 1195120,
+                  "strand": "+",
+                  "identity": 0.8859022144266608
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ChrI_C_glabrata_CBS138",
+          "length": 1142525,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 139,
+                  "end": 1005110,
+                  "strand": "-",
+                  "identity": 0.9859196566087155
+                },
+                {
+                  "start": 0,
+                  "end": 3974,
+                  "strand": "-",
+                  "identity": 0.8240461847389559
+                },
+                {
+                  "start": 1004546,
+                  "end": 1100341,
+                  "strand": "-",
+                  "identity": 0.9244518221124151
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ChrH_C_glabrata_CBS138",
+          "length": 1057388,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 8,
+                  "end": 5128,
+                  "strand": "+",
+                  "identity": 0.9716796875
+                },
+                {
+                  "start": 743,
+                  "end": 1049760,
+                  "strand": "+",
+                  "identity": 0.9920255243991606
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ChrG_C_glabrata_CBS138",
+          "length": 1010292,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 4130,
+                  "end": 992205,
+                  "strand": "+",
+                  "identity": 0.9984979536387225
+                },
+                {
+                  "start": 3,
+                  "end": 4475,
+                  "strand": "-",
+                  "identity": 0.8755029056772463
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ChrF_C_glabrata_CBS138",
+          "length": 957515,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 2453,
+                  "end": 927093,
+                  "strand": "+",
+                  "identity": 0.9990256784025019
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ChrE_C_glabrata_CBS138",
+          "length": 707423,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 2657,
+                  "end": 687732,
+                  "strand": "+",
+                  "identity": 0.982205966547045
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ChrD_C_glabrata_CBS138",
+          "length": 667900,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 3493,
+                  "end": 651671,
+                  "strand": "+",
+                  "identity": 0.9964877696643252
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ChrC_C_glabrata_CBS138",
+          "length": 594526,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 1,
+                  "end": 558798,
+                  "strand": "-",
+                  "identity": 0.9150986178495807
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ChrA_C_glabrata_CBS138",
+          "length": 527800,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 484275,
+                  "end": 485425,
+                  "strand": "-",
+                  "identity": 1.0
+                },
+                {
+                  "start": 12530,
+                  "end": 24326,
+                  "strand": "-",
+                  "identity": 1.0
+                },
+                {
+                  "start": 1,
+                  "end": 491328,
+                  "strand": "+",
+                  "identity": 0.9710726388946591
+                },
+                {
+                  "start": 486538,
+                  "end": 489928,
+                  "strand": "+",
+                  "identity": 0.9045596148399887
+                },
+                {
+                  "start": 488171,
+                  "end": 490519,
+                  "strand": "+",
+                  "identity": 0.9433560477001703
+                },
+                {
+                  "start": 488171,
+                  "end": 490519,
+                  "strand": "+",
+                  "identity": 0.9433560477001703
+                },
+                {
+                  "start": 486538,
+                  "end": 488483,
+                  "strand": "+",
+                  "identity": 0.9552699228791773
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ChrB_C_glabrata_CBS138",
+          "length": 512655,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 9,
+                  "end": 502092,
+                  "strand": "+",
+                  "identity": 0.9923432139507828
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "mito_C_glabrata_CBS138",
+          "length": 20063,
+          "tracks": [
+            {
+              "name": "Synteny",
+              "type": "standard",
+              "regions": [
+                {
+                  "start": 2,
+                  "end": 1557,
+                  "strand": "+",
+                  "identity": 1.0
+                },
+                {
+                  "start": 2,
+                  "end": 20051,
+                  "strand": "+",
+                  "identity": 0.9999501222006085
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "synteny_links": [
+    {
+      "query_name": "contig_1",
+      "query_start": 28,
+      "query_end": 1583,
+      "target_name": "mito_C_glabrata_CBS138",
+      "target_start": 2,
+      "target_end": 1557,
+      "strand": "+",
+      "identity": 1.0
+    },
+    {
+      "query_name": "contig_12",
+      "query_start": 1641,
+      "query_end": 593924,
+      "target_name": "ChrC_C_glabrata_CBS138",
+      "target_start": 1,
+      "target_end": 558798,
+      "strand": "-",
+      "identity": 0.9150986178495807
+    },
+    {
+      "query_name": "contig_23",
+      "query_start": 1809,
+      "query_end": 1015116,
+      "target_name": "ChrI_C_glabrata_CBS138",
+      "target_start": 139,
+      "target_end": 1005110,
+      "strand": "-",
+      "identity": 0.9859196566087155
+    },
+    {
+      "query_name": "contig_27",
+      "query_start": 14428,
+      "query_end": 15578,
+      "target_name": "ChrA_C_glabrata_CBS138",
+      "target_start": 484275,
+      "target_end": 485425,
+      "strand": "-",
+      "identity": 1.0
+    },
+    {
+      "query_name": "contig_28",
+      "query_start": 17227,
+      "query_end": 1006447,
+      "target_name": "ChrG_C_glabrata_CBS138",
+      "target_start": 4130,
+      "target_end": 992205,
+      "strand": "+",
+      "identity": 0.9984979536387225
+    },
+    {
+      "query_name": "contig_29",
+      "query_start": 957,
+      "query_end": 6061,
+      "target_name": "ChrH_C_glabrata_CBS138",
+      "target_start": 8,
+      "target_end": 5128,
+      "strand": "+",
+      "identity": 0.9716796875
+    },
+    {
+      "query_name": "contig_3",
+      "query_start": 2700,
+      "query_end": 1305850,
+      "target_name": "ChrK_C_glabrata_CBS138",
+      "target_start": 3,
+      "target_end": 1302822,
+      "strand": "-",
+      "identity": 0.998817122723901
+    },
+    {
+      "query_name": "contig_31",
+      "query_start": 7290,
+      "query_end": 655514,
+      "target_name": "ChrD_C_glabrata_CBS138",
+      "target_start": 3493,
+      "target_end": 651671,
+      "strand": "+",
+      "identity": 0.9964877696643252
+    },
+    {
+      "query_name": "contig_31",
+      "query_start": 656021,
+      "query_end": 660363,
+      "target_name": "ChrG_C_glabrata_CBS138",
+      "target_start": 3,
+      "target_end": 4475,
+      "strand": "-",
+      "identity": 0.8755029056772463
+    },
+    {
+      "query_name": "contig_32",
+      "query_start": 1543,
+      "query_end": 1230728,
+      "target_name": "ChrJ_C_glabrata_CBS138",
+      "target_start": 2776,
+      "target_end": 1195050,
+      "strand": "-",
+      "identity": 0.9559630505127082
+    },
+    {
+      "query_name": "contig_34",
+      "query_start": 61815,
+      "query_end": 1455981,
+      "target_name": "ChrM_C_glabrata_CBS138",
+      "target_start": 8608,
+      "target_end": 1402890,
+      "strand": "-",
+      "identity": 0.9987678369585798
+    },
+    {
+      "query_name": "contig_34",
+      "query_start": 1450702,
+      "query_end": 1473170,
+      "target_name": "ChrJ_C_glabrata_CBS138",
+      "target_start": 1173437,
+      "target_end": 1195120,
+      "strand": "+",
+      "identity": 0.8859022144266608
+    },
+    {
+      "query_name": "contig_34",
+      "query_start": 51138,
+      "query_end": 67376,
+      "target_name": "ChrL_C_glabrata_CBS138",
+      "target_start": 1439496,
+      "target_end": 1455681,
+      "strand": "-",
+      "identity": 0.9396047528165979
+    },
+    {
+      "query_name": "contig_34",
+      "query_start": 18151,
+      "query_end": 29220,
+      "target_name": "ChrL_C_glabrata_CBS138",
+      "target_start": 1444609,
+      "target_end": 1455681,
+      "strand": "-",
+      "identity": 0.9986452312138728
+    },
+    {
+      "query_name": "contig_34",
+      "query_start": 7149,
+      "query_end": 18238,
+      "target_name": "ChrL_C_glabrata_CBS138",
+      "target_start": 1444606,
+      "target_end": 1455681,
+      "strand": "-",
+      "identity": 0.993869455463397
+    },
+    {
+      "query_name": "contig_34",
+      "query_start": 42754,
+      "query_end": 51212,
+      "target_name": "ChrL_C_glabrata_CBS138",
+      "target_start": 1444619,
+      "target_end": 1453077,
+      "strand": "-",
+      "identity": 0.9988176873965476
+    },
+    {
+      "query_name": "contig_34",
+      "query_start": 31753,
+      "query_end": 40211,
+      "target_name": "ChrL_C_glabrata_CBS138",
+      "target_start": 1444619,
+      "target_end": 1453077,
+      "strand": "-",
+      "identity": 0.9988176873965476
+    },
+    {
+      "query_name": "contig_34",
+      "query_start": 2,
+      "query_end": 7233,
+      "target_name": "ChrL_C_glabrata_CBS138",
+      "target_start": 1444609,
+      "target_end": 1451841,
+      "strand": "-",
+      "identity": 0.9984789823008849
+    },
+    {
+      "query_name": "contig_34",
+      "query_start": 29365,
+      "query_end": 30898,
+      "target_name": "ChrL_C_glabrata_CBS138",
+      "target_start": 1453936,
+      "target_end": 1455469,
+      "strand": "-",
+      "identity": 0.9928245270711024
+    },
+    {
+      "query_name": "contig_34",
+      "query_start": 40366,
+      "query_end": 41899,
+      "target_name": "ChrL_C_glabrata_CBS138",
+      "target_start": 1453936,
+      "target_end": 1455469,
+      "strand": "-",
+      "identity": 0.9928245270711024
+    },
+    {
+      "query_name": "contig_44",
+      "query_start": 42,
+      "query_end": 1052958,
+      "target_name": "ChrH_C_glabrata_CBS138",
+      "target_start": 743,
+      "target_end": 1049760,
+      "strand": "+",
+      "identity": 0.9920255243991606
+    },
+    {
+      "query_name": "contig_49",
+      "query_start": 3194,
+      "query_end": 508541,
+      "target_name": "ChrB_C_glabrata_CBS138",
+      "target_start": 9,
+      "target_end": 502092,
+      "strand": "+",
+      "identity": 0.9923432139507828
+    },
+    {
+      "query_name": "contig_50",
+      "query_start": 12,
+      "query_end": 20060,
+      "target_name": "mito_C_glabrata_CBS138",
+      "target_start": 2,
+      "target_end": 20051,
+      "strand": "+",
+      "identity": 0.9999501222006085
+    },
+    {
+      "query_name": "contig_52",
+      "query_start": 10644,
+      "query_end": 935189,
+      "target_name": "ChrF_C_glabrata_CBS138",
+      "target_start": 2453,
+      "target_end": 927093,
+      "strand": "+",
+      "identity": 0.9990256784025019
+    },
+    {
+      "query_name": "contig_52",
+      "query_start": 937185,
+      "query_end": 941168,
+      "target_name": "ChrI_C_glabrata_CBS138",
+      "target_start": 0,
+      "target_end": 3974,
+      "strand": "-",
+      "identity": 0.8240461847389559
+    },
+    {
+      "query_name": "contig_53",
+      "query_start": 8231,
+      "query_end": 111841,
+      "target_name": "ChrI_C_glabrata_CBS138",
+      "target_start": 1004546,
+      "target_end": 1100341,
+      "strand": "-",
+      "identity": 0.9244518221124151
+    },
+    {
+      "query_name": "contig_54",
+      "query_start": 3457,
+      "query_end": 1437383,
+      "target_name": "ChrL_C_glabrata_CBS138",
+      "target_start": 1930,
+      "target_end": 1429841,
+      "strand": "+",
+      "identity": 0.9954178788495814
+    },
+    {
+      "query_name": "contig_55",
+      "query_start": 5,
+      "query_end": 11801,
+      "target_name": "ChrA_C_glabrata_CBS138",
+      "target_start": 12530,
+      "target_end": 24326,
+      "strand": "-",
+      "identity": 1.0
+    },
+    {
+      "query_name": "contig_7",
+      "query_start": 3383,
+      "query_end": 700232,
+      "target_name": "ChrE_C_glabrata_CBS138",
+      "target_start": 2657,
+      "target_end": 687732,
+      "strand": "+",
+      "identity": 0.982205966547045
+    },
+    {
+      "query_name": "contig_8",
+      "query_start": 260,
+      "query_end": 505702,
+      "target_name": "ChrA_C_glabrata_CBS138",
+      "target_start": 1,
+      "target_end": 491328,
+      "strand": "+",
+      "identity": 0.9710726388946591
+    },
+    {
+      "query_name": "contig_8",
+      "query_start": 504008,
+      "query_end": 507539,
+      "target_name": "ChrA_C_glabrata_CBS138",
+      "target_start": 486538,
+      "target_end": 489928,
+      "strand": "+",
+      "identity": 0.9045596148399887
+    },
+    {
+      "query_name": "contig_8",
+      "query_start": 507837,
+      "query_end": 510185,
+      "target_name": "ChrA_C_glabrata_CBS138",
+      "target_start": 488171,
+      "target_end": 490519,
+      "strand": "+",
+      "identity": 0.9433560477001703
+    },
+    {
+      "query_name": "contig_8",
+      "query_start": 508428,
+      "query_end": 510776,
+      "target_name": "ChrA_C_glabrata_CBS138",
+      "target_start": 488171,
+      "target_end": 490519,
+      "strand": "+",
+      "identity": 0.9433560477001703
+    },
+    {
+      "query_name": "contig_8",
+      "query_start": 510650,
+      "query_end": 512595,
+      "target_name": "ChrA_C_glabrata_CBS138",
+      "target_start": 486538,
+      "target_end": 488483,
+      "strand": "+",
+      "identity": 0.9552699228791773
+    }
+  ],
+  "metadata": {
+    "total_blocks": 34,
+    "query_sequences": 23,
+    "target_sequences": 14
+  }
+}

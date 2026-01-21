@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synteny View - GenomeD3Plot</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .controls label {
+            margin-right: 15px;
+        }
+        .controls select, .controls input {
+            margin-right: 20px;
+            padding: 5px;
+        }
+        #syntenyPlot {
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+        #syntenyPlot svg {
+            display: block;
+        }
+        .info {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e8f4f8;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .sequence {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .sequence-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .synteny-link {
+            stroke: #4a90e2;
+            stroke-width: 2;
+            opacity: 0.6;
+            fill: none;
+        }
+        .synteny-link:hover {
+            stroke-width: 3;
+            opacity: 0.9;
+        }
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Synteny Visualization - Assembly vs Reference</h1>
+        
+        <div class="controls">
+            <label>Data file:</label>
+            <select id="dataFile">
+                <option value="synteny_data.json">synteny_data.json</option>
+            </select>
+            <button onclick="loadData()">Load Data</button>
+            <label>Min Identity:</label>
+            <input type="range" id="minIdentity" min="0" max="1" step="0.01" value="0.8">
+            <span id="identityValue">0.8</span>
+            <button onclick="downloadImage()" style="margin-left: 20px; padding: 5px 15px; background-color: #4a90e2; color: white; border: none; border-radius: 4px; cursor: pointer;">Download Image</button>
+        </div>
+        
+        <div id="syntenyPlot"></div>
+        
+        <div class="info" id="info"></div>
+    </div>
+
+    <div class="tooltip" id="tooltip" style="display: none;"></div>
+
+    <script>
+        let syntenyData = null;
+        let filteredData = null;
+        let svg = null;
+        let baseWidth = 1400;
+        let width = baseWidth;
+        let height = 700;
+        const margin = { top: 60, right: 100, bottom: 60, left: 200 };
+        let plotWidth = width - margin.left - margin.right;
+        const plotHeight = height - margin.top - margin.bottom;
+
+        function loadData() {
+            const dataFile = document.getElementById('dataFile').value;
+            fetch(dataFile)
+                .then(response => response.json())
+                .then(data => {
+                    syntenyData = data;
+                    updateFilter();
+                })
+                .catch(error => {
+                    console.error('Error loading data:', error);
+                    alert('Error loading data file. Make sure synteny_data.json exists.');
+                });
+        }
+
+        function updateFilter() {
+            const minIdentity = parseFloat(document.getElementById('minIdentity').value);
+            document.getElementById('identityValue').textContent = minIdentity.toFixed(2);
+            
+            if (!syntenyData) return;
+            
+            filteredData = {
+                ...syntenyData,
+                synteny_links: syntenyData.synteny_links.filter(link => link.identity >= minIdentity)
+            };
+            
+            drawSynteny();
+        }
+
+        function drawSynteny() {
+            if (!filteredData) return;
+            
+            // Clear previous plot
+            d3.select('#syntenyPlot').selectAll('*').remove();
+            
+            // Get sequences from both genomes
+            const querySeqs = filteredData.genomes.query.sequences;
+            const targetSeqs = filteredData.genomes.target.sequences;
+            
+            // Calculate total lengths for scaling
+            const totalQueryLength = d3.sum(querySeqs, d => d.length);
+            const totalTargetLength = d3.sum(targetSeqs, d => d.length);
+            const maxTotalLength = Math.max(totalQueryLength, totalTargetLength);
+            
+            // Calculate actual width needed based on sequence lengths
+            const seqSpacing = 8;
+            const bpPerPixel = 2000; // Base pairs per pixel for scaling
+            const minSeqWidth = 30; // Minimum width per sequence for visibility
+            
+            // Calculate width needed for query sequences
+            let queryWidthNeeded = 0;
+            querySeqs.forEach((seq, i) => {
+                const seqWidth = Math.max(seq.length / bpPerPixel, minSeqWidth);
+                queryWidthNeeded += seqWidth;
+                // Add spacing between sequences, but not after the last one
+                if (i < querySeqs.length - 1) {
+                    queryWidthNeeded += seqSpacing;
+                }
+            });
+            
+            // Calculate width needed for target sequences
+            let targetWidthNeeded = 0;
+            targetSeqs.forEach((seq, i) => {
+                const seqWidth = Math.max(seq.length / bpPerPixel, minSeqWidth);
+                targetWidthNeeded += seqWidth;
+                // Add spacing between sequences, but not after the last one
+                if (i < targetSeqs.length - 1) {
+                    targetWidthNeeded += seqSpacing;
+                }
+            });
+            
+            // Add extra padding to the right to ensure all sequences are fully visible
+            // Include space for labels and ensure last sequence is completely visible
+            const rightPadding = 300; // Increased padding for labels and full visibility
+            const calculatedWidth = Math.max(
+                baseWidth,
+                Math.max(queryWidthNeeded, targetWidthNeeded) + margin.left + margin.right + rightPadding
+            );
+            
+            // Update width if needed
+            if (calculatedWidth > width) {
+                width = calculatedWidth;
+                plotWidth = width - margin.left - margin.right;
+            }
+            
+            // Create SVG with calculated width
+            svg = d3.select('#syntenyPlot')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+            
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+            
+            // Calculate layout - use vertical stacking for better visibility
+            const queryY = 100;
+            const targetY = plotHeight - 100;
+            const seqHeight = 18;
+            
+            // Calculate the actual plot width needed (without the extra padding)
+            const actualPlotWidth = Math.max(queryWidthNeeded, targetWidthNeeded);
+            
+            // Note: We use bpPerPixel directly for sequence widths, not xScale
+            // This ensures consistent scaling between layout calculation and drawing
+            
+            // Draw query genome sequences (top)
+            let queryX = 0;
+            let maxQueryX = 0;
+            const queryPositions = {};
+            querySeqs.forEach((seq, i) => {
+                // Calculate width based on actual sequence length, not global scale
+                const seqWidth = Math.max(seq.length / bpPerPixel, minSeqWidth);
+                queryPositions[seq.name] = {
+                    x: queryX,
+                    width: seqWidth,
+                    y: queryY,
+                    length: seq.length
+                };
+                
+                // Draw sequence rectangle
+                g.append('rect')
+                    .attr('x', queryX)
+                    .attr('y', queryY - seqHeight/2)
+                    .attr('width', seqWidth)
+                    .attr('height', seqHeight)
+                    .attr('fill', '#4a90e2')
+                    .attr('stroke', '#2c3e50')
+                    .attr('stroke-width', 1)
+                    .attr('rx', 2);
+                
+                // Draw sequence label on top (rotated to prevent overlap)
+                if (seqWidth > 20) {
+                    const label = g.append('text')
+                        .attr('x', queryX + seqWidth/2)
+                        .attr('y', queryY - seqHeight/2 - 8)
+                        .attr('text-anchor', 'middle')
+                        .attr('font-size', '9px')
+                        .attr('fill', '#2c3e50')
+                        .text(seq.name);
+                    
+                    // Rotate label if box is narrow
+                    if (seqWidth < 100) {
+                        label.attr('transform', `rotate(-45 ${queryX + seqWidth/2} ${queryY - seqHeight/2 - 8})`)
+                            .attr('text-anchor', 'start')
+                            .attr('dx', '3px');
+                    }
+                }
+                
+                // Add spacing only if not the last sequence
+                if (i < querySeqs.length - 1) {
+                    queryX += seqWidth + seqSpacing;
+                } else {
+                    queryX += seqWidth;
+                }
+                maxQueryX = Math.max(maxQueryX, queryX);
+            });
+            
+            // Draw target genome sequences (bottom)
+            let targetX = 0;
+            let maxTargetX = 0;
+            const targetPositions = {};
+            targetSeqs.forEach((seq, i) => {
+                // Calculate width based on actual sequence length, not global scale
+                const seqWidth = Math.max(seq.length / bpPerPixel, minSeqWidth);
+                targetPositions[seq.name] = {
+                    x: targetX,
+                    width: seqWidth,
+                    y: targetY,
+                    length: seq.length
+                };
+                
+                // Draw sequence rectangle
+                g.append('rect')
+                    .attr('x', targetX)
+                    .attr('y', targetY - seqHeight/2)
+                    .attr('width', seqWidth)
+                    .attr('height', seqHeight)
+                    .attr('fill', '#e24a4a')
+                    .attr('stroke', '#2c3e50')
+                    .attr('stroke-width', 1)
+                    .attr('rx', 2);
+                
+                // Draw sequence label on top (below the box for bottom row, rotated to prevent overlap)
+                if (seqWidth > 20) {
+                    const label = g.append('text')
+                        .attr('x', targetX + seqWidth/2)
+                        .attr('y', targetY + seqHeight/2 + 18)
+                        .attr('text-anchor', 'middle')
+                        .attr('font-size', '9px')
+                        .attr('fill', '#2c3e50')
+                        .text(seq.name);
+                    
+                    // Rotate label if box is narrow
+                    if (seqWidth < 100) {
+                        label.attr('transform', `rotate(45 ${targetX + seqWidth/2} ${targetY + seqHeight/2 + 18})`)
+                            .attr('text-anchor', 'start')
+                            .attr('dx', '3px');
+                    }
+                }
+                
+                // Add spacing only if not the last sequence
+                if (i < targetSeqs.length - 1) {
+                    targetX += seqWidth + seqSpacing;
+                } else {
+                    targetX += seqWidth;
+                }
+                maxTargetX = Math.max(maxTargetX, targetX);
+            });
+            
+            // Update SVG width if actual drawn width is larger than calculated
+            const actualDrawnWidth = Math.max(maxQueryX, maxTargetX) + margin.left + margin.right + 200;
+            if (actualDrawnWidth > width) {
+                width = actualDrawnWidth;
+                svg.attr('width', width);
+            }
+            
+            // Draw genome labels
+            g.append('text')
+                .attr('x', -10)
+                .attr('y', queryY)
+                .attr('text-anchor', 'end')
+                .attr('font-size', '12px')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#2c3e50')
+                .text('Assembly');
+            
+            g.append('text')
+                .attr('x', -10)
+                .attr('y', targetY)
+                .attr('text-anchor', 'end')
+                .attr('font-size', '12px')
+                .attr('font-weight', 'bold')
+                .attr('fill', '#2c3e50')
+                .text('Reference');
+            
+            // Draw synteny links
+            const tooltip = d3.select('#tooltip');
+            
+            filteredData.synteny_links.forEach(link => {
+                const queryPos = queryPositions[link.query_name];
+                const targetPos = targetPositions[link.target_name];
+                
+                if (!queryPos || !targetPos) return;
+                
+                // Get sequence lengths from positions
+                const queryLen = queryPos.length;
+                const targetLen = targetPos.length;
+                
+                // Calculate positions within sequences
+                // queryPos.x is the left edge of the sequence box
+                // queryPos.width is the width of the sequence box
+                // We need to map the alignment coordinates (0 to queryLen) to positions within the box (0 to width)
+                const queryStartX = queryPos.x + (link.query_start / queryLen) * queryPos.width;
+                const queryEndX = queryPos.x + (link.query_end / queryLen) * queryPos.width;
+                
+                const targetStartX = targetPos.x + (link.target_start / targetLen) * targetPos.width;
+                const targetEndX = targetPos.x + (link.target_end / targetLen) * targetPos.width;
+                
+                // Debug: log for contig_12 alignment
+                if (link.query_name === 'contig_12' && link.target_name === 'ChrC_C_glabrata_CBS138') {
+                    console.log('Ribbon calculation:', {
+                        queryName: link.query_name,
+                        queryStart: link.query_start,
+                        queryEnd: link.query_end,
+                        queryLen: queryLen,
+                        queryPosX: queryPos.x,
+                        queryPosWidth: queryPos.width,
+                        queryStartX: queryStartX,
+                        queryEndX: queryEndX,
+                        targetName: link.target_name,
+                        targetStart: link.target_start,
+                        targetEnd: link.target_end,
+                        targetLen: targetLen,
+                        targetPosX: targetPos.x,
+                        targetPosWidth: targetPos.width,
+                        targetStartX: targetStartX,
+                        targetEndX: targetEndX
+                    });
+                }
+                
+                // Draw a ribbon showing the full alignment span
+                // Create a path that connects the start and end points on both sides
+                const controlY = (queryPos.y + targetPos.y) / 2;
+                
+                // Create a closed path for the ribbon
+                // The ribbon should connect:
+                // - query start position to target start position (left side)
+                // - target start to target end (along target sequence)
+                // - target end to query end (right side)
+                // - query end back to query start (along query sequence)
+                const ribbonPath = d3.path();
+                
+                // Start at query start position (left edge of alignment on query)
+                ribbonPath.moveTo(queryStartX, queryPos.y);
+                
+                // Curve down from query start to target start
+                ribbonPath.bezierCurveTo(
+                    queryStartX, controlY,
+                    targetStartX, controlY,
+                    targetStartX, targetPos.y
+                );
+                
+                // Draw line along target sequence from start to end
+                ribbonPath.lineTo(targetEndX, targetPos.y);
+                
+                // Curve up from target end to query end
+                ribbonPath.bezierCurveTo(
+                    targetEndX, controlY,
+                    queryEndX, controlY,
+                    queryEndX, queryPos.y
+                );
+                
+                // Draw line back along query sequence from end to start
+                ribbonPath.lineTo(queryStartX, queryPos.y);
+                
+                // Close the path (this should be redundant but ensures it's closed)
+                ribbonPath.closePath();
+                
+                // Determine stroke width based on block length
+                const blockLength = Math.max(link.query_end - link.query_start, link.target_end - link.target_start);
+                const strokeWidth = Math.max(1, Math.min(4, blockLength / 10000));
+                const baseOpacity = 0.6 + (link.identity * 0.3);
+                
+                // Draw the ribbon as a filled path
+                g.append('path')
+                    .attr('d', ribbonPath.toString())
+                    .attr('class', 'synteny-link')
+                    .attr('fill', getColorForIdentity(link.identity))
+                    .attr('fill-opacity', 0.5)
+                    .attr('stroke', getColorForIdentity(link.identity))
+                    .attr('stroke-width', strokeWidth)
+                    .attr('opacity', baseOpacity)
+                    .on('mouseover', function(event) {
+                        d3.select(this).attr('opacity', 0.9).attr('stroke-width', strokeWidth + 1);
+                        tooltip.style('display', 'block')
+                            .html(`
+                                <strong>Query:</strong> ${link.query_name}<br>
+                                <strong>Target:</strong> ${link.target_name}<br>
+                                <strong>Identity:</strong> ${(link.identity * 100).toFixed(2)}%<br>
+                                <strong>Query:</strong> ${link.query_start.toLocaleString()}-${link.query_end.toLocaleString()} (${(link.query_end - link.query_start).toLocaleString()} bp)<br>
+                                <strong>Target:</strong> ${link.target_start.toLocaleString()}-${link.target_end.toLocaleString()} (${(link.target_end - link.target_start).toLocaleString()} bp)<br>
+                                <strong>Strand:</strong> ${link.strand}
+                            `)
+                            .style('left', (event.pageX + 10) + 'px')
+                            .style('top', (event.pageY - 10) + 'px');
+                    })
+                    .on('mouseout', function() {
+                        d3.select(this).attr('opacity', baseOpacity).attr('stroke-width', strokeWidth);
+                        tooltip.style('display', 'none');
+                    });
+            });
+            
+            // Update info
+            document.getElementById('info').innerHTML = `
+                <strong>Statistics:</strong><br>
+                Total synteny blocks: ${filteredData.synteny_links.length}<br>
+                Query sequences: ${querySeqs.length} (Total: ${(totalQueryLength/1000000).toFixed(2)} Mb)<br>
+                Target sequences: ${targetSeqs.length} (Total: ${(totalTargetLength/1000000).toFixed(2)} Mb)
+            `;
+        }
+        
+        
+        function getColorForIdentity(identity) {
+            if (identity >= 0.95) return '#2ecc71'; // Green
+            if (identity >= 0.90) return '#3498db'; // Blue
+            if (identity >= 0.85) return '#f39c12'; // Orange
+            return '#e74c3c'; // Red
+        }
+        
+        function downloadImage() {
+            const plotElement = document.getElementById('syntenyPlot');
+            const svgElement = plotElement.querySelector('svg');
+            
+            if (!svgElement) {
+                alert('No visualization to download. Please load data first.');
+                return;
+            }
+            
+            // Get SVG dimensions
+            const svgWidth = svgElement.getAttribute('width');
+            const svgHeight = svgElement.getAttribute('height');
+            
+            // Create a canvas
+            const canvas = document.createElement('canvas');
+            canvas.width = parseInt(svgWidth);
+            canvas.height = parseInt(svgHeight);
+            const ctx = canvas.getContext('2d');
+            
+            // Set white background
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Convert SVG to image
+            const svgData = new XMLSerializer().serializeToString(svgElement);
+            const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(svgBlob);
+            
+            const img = new Image();
+            img.onload = function() {
+                ctx.drawImage(img, 0, 0);
+                URL.revokeObjectURL(url);
+                
+                // Convert canvas to blob and download
+                canvas.toBlob(function(blob) {
+                    const downloadUrl = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = downloadUrl;
+                    link.download = 'synteny_visualization.png';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(downloadUrl);
+                }, 'image/png');
+            };
+            
+            img.onerror = function() {
+                // Fallback: try downloading as SVG
+                const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+                const url = URL.createObjectURL(svgBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'synteny_visualization.svg';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            };
+            
+            img.src = url;
+        }
+        
+        // Initialize - ensure slider works even if inline handler doesn't fire
+        window.onload = function() {
+            loadData();
+            
+            // Set up identity slider event listener
+            const identitySlider = document.getElementById('minIdentity');
+            if (identitySlider) {
+                identitySlider.addEventListener('input', function() {
+                    updateFilter();
+                });
+            }
+        };
+    </script>
+</body>
+</html>
